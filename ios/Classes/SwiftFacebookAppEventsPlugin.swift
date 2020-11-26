@@ -79,13 +79,16 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
     }
 
     private func handleLogEvent(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        print("In handleLogEvent");
         let arguments = call.arguments as? [String: Any] ?? [String: Any]()
         let eventName = arguments["name"] as! String
         let parameters = arguments["parameters"] as? [String: Any] ?? [String: Any]()
         if arguments["_valueToSum"] != nil && !(arguments["_valueToSum"] is NSNull) {
             let valueToDouble = arguments["_valueToSum"] as! Double
+            print("valueToSum is not null");
             AppEvents.logEvent(AppEvents.Name(eventName), valueToSum: valueToDouble, parameters: parameters)
         } else {
+            print("valueToSum is null");
             AppEvents.logEvent(AppEvents.Name(eventName), parameters: parameters)
         }
 
