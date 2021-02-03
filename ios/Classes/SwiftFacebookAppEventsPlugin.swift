@@ -50,6 +50,9 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         case "getAnonymousId":
             handleHandleGetAnonymousId(call, result: result)
             break
+        case "requestTrackingAuthorization"
+            handleTrackingPermission(call, result: result)
+            break
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -168,5 +171,26 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         AppEvents.logPurchase(amount, currency: currency, parameters: parameters)
 
         result(nil)
+    }
+    
+    private func handleTrackingPermission(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { (status) in
+                switch status {
+                    case .authorized:
+                        Settings.setAdvertiserTrackingEnabled(true)
+                        result(true)
+                        
+                    default:
+                        Settings.setAdvertiserTrackingEnabled(false)
+                        result(false)
+                    }
+                }
+        } else {
+            Settings.setAdvertiserTrackingEnabled(true)
+            result(true)
+        }
+
+        
     }
 }

@@ -63,6 +63,10 @@ class FacebookAppEvents {
     return _channel.invokeMethod<String>('getAnonymousId');
   }
 
+  Future<bool> requestTrackingAuthorization() {
+    return _channel.invokeMethod<bool>('requestTrackingAuthorization');
+  }
+
   /// Log an app event with the specified [name] and the supplied [parameters] value.
   Future<void> logEvent({
     @required String name,
