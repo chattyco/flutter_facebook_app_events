@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import FBSDKCoreKit
+import AppTrackingTransparency
 
 public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -50,7 +51,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         case "getAnonymousId":
             handleHandleGetAnonymousId(call, result: result)
             break
-        case "requestTrackingAuthorization"
+        case "requestTrackingAuthorization":
             handleTrackingPermission(call, result: result)
             break
         default:
